@@ -11,7 +11,6 @@ afterEach(async () => {
 
 describe("When logged in", async () => {
   beforeEach(async () => {
-    page = await Page.build();
     await page.login();
     await page.click(".btn-floating.btn-large.red");
   });
