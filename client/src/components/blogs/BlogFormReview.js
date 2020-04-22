@@ -1,12 +1,14 @@
 // BlogFormReview shows users their form inputs for review
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import formFields from './formFields';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../actions';
+import _ from "lodash";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import formFields from "./formFields";
+import { withRouter } from "react-router-dom";
+import * as actions from "../../actions";
 
 class BlogFormReview extends Component {
+  state = { file: null };
+
   renderFields() {
     const { formValues } = this.props;
 
@@ -44,15 +46,21 @@ class BlogFormReview extends Component {
 
     const { submitBlog, history, formValues } = this.props;
 
-    submitBlog(formValues, history);
+    submitBlog(formValues, this.state.file, history);
   }
+
+  onFileChange = (event) => {
+    console.log(event.target.files);
+    this.setState({ file: event.target.files[0] });
+  };
 
   render() {
     return (
       <form onSubmit={this.onSubmit.bind(this)}>
         <h5>Please confirm your entries</h5>
         {this.renderFields()}
-
+        <h3>Add image</h3>
+        <input onChange={this.onFileChange} type="file" accept="image/*" />
         {this.renderButtons()}
       </form>
     );
